@@ -1,90 +1,114 @@
 # AES_256_Encryption_Python
 📌 Encryption Project — Caesar Cipher + AES (GUI)
 
-## Description
-This project contains Python implementations of *Caesar Cipher* and *AES encryption, including a **GUI for AES encryption/decryption* with multiple modes (ECB, CBC, CFB, OFB). It's a learning project to demonstrate classic and modern encryption techniques.
+Python Cryptography Projects
 
----
+Project Description:
 
-## 1️⃣ Caesar Cipher
+This project contains three main encryption programs that demonstrate the difference between classical and modern cryptography.
 
-*File:* caesar_cipher.py
+1. Caesar Cipher
+A simple classical cipher that works by shifting letters in the alphabet by a certain number of positions.
+It is mainly used for understanding the basic idea of encryption and substitution methods.
 
-*Description:*  
-A simple substitution cipher where each letter in the plaintext is shifted by a fixed number of positions.
+2. AES-128 From Scratch
+A modern and secure encryption algorithm implemented from scratch for educational purposes.
+This program demonstrates the internal workings of AES including key expansion, SubBytes, ShiftRows, MixColumns, and AddRoundKey.
 
-*Functions:*
-- caesar_encrypt(text, shift) – Encrypts text by shifting letters forward.  
-- caesar_decrypt(text, shift) – Decrypts text by shifting letters backward.  
+3. AES GUI (Tkinter + PyCryptodome)
+A modern and secure AES encryption program with a graphical user interface.
+It allows users to encrypt and decrypt text using AES in multiple modes:
+- ECB (Electronic Codebook)
+- CBC (Cipher Block Chaining)
+- CFB (Cipher Feedback)
+- OFB (Output Feedback)
+The GUI uses Tkinter for interface design and PyCryptodome for AES encryption.
+Passwords are hashed using SHA-256 to create secure encryption keys.
 
-*Usage Example:*
-```python
-# Encrypt
-encrypted_text = caesar_encrypt("HELLO", 3)
-print(encrypted_text)  # Output: KHOOR
+What This Project Demonstrates:
+- The difference between classical encryption (Caesar) and modern secure encryption (AES).
+- Understanding how substitution works vs. how block ciphers and modes of operation work.
+- How to build a simple GUI for encryption.
+- How to apply hashing for secure key generation.
+- How to use Python libraries for cryptography securely and efficiently.
 
-# Decrypt
-decrypted_text = caesar_decrypt(encrypted_text, 3)
-print(decrypted_text)  # Output: HELLO
+Why This Is Important:
+- Caesar Cipher teaches the basics of encryption logic.
+- AES from scratch shows the internal mechanics of block ciphers.
+- AES GUI demonstrates practical and secure implementation of encryption using existing libraries.
+- Combines coding, cryptography, GUI design, and security concepts.
+- Excellent for learning, presenting, and practical encryption examples.
 
-2️⃣ AES-128 Implementation (From Scratch)
+Files Included:
+- caesar_cipher.py: Implementation of Caesar encryption/decryption.
+- aes_128.py: AES-128 implementation from scratch for educational purposes.
+- aes_gui.py: GUI application for AES encryption/decryption using Python libraries.
+- README.txt: Project description and documentation.
 
-File: aes_128.py
+Caesar Cipher:
+Overview:
+A classical substitution cipher that shifts letters by a specified number of steps.
 
-Description:
-A full AES-128 implementation from scratch, including:
-	•	Key Expansion
-	•	SubBytes & ShiftRows
-	•	MixColumns & AddRoundKey
-	•	PKCS7 Padding
+How to use:
+1. Run the script.
+2. Choose whether to encrypt or decrypt.
+3. Enter your text and the shift number.
+4. The program outputs the encrypted or decrypted text.
 
-Functions:
-	•	aes_encrypt_block(block, keys) – Encrypts a 16-byte block.
-	•	aes_decrypt_block(block, keys) – Decrypts a 16-byte block.
-	•	pad(data) / unpad(data) – For block alignment.
-	•	key_expansion(key) – Expands a 16-byte key into 11 round keys.
+Learning Points:
+- Understand the basics of encryption and substitution.
+- Learn how simple algorithms can transform text securely (for educational purposes).
 
-Usage Example:
+AES-128 From Scratch:
+Overview:
+A full AES-128 implementation demonstrating internal AES operations, including Key Expansion, SubBytes & ShiftRows, MixColumns & AddRoundKey, and PKCS7 Padding.
 
-msg = "HELLO WORLD"
-msg_bytes = pad(msg.encode())
-key = b"\x2b\x7e\x15\x16\x28\xae\xd2\xa6\xab\xf7\x15\x88\x09\xcf\x4f\x3c"
-keys = key_expansion(list(key))
+How to use:
+1. Run the script.
+2. Enter your message.
+3. The program encrypts the message and shows it in hexadecimal format.
+4. Then it decrypts the message and prints the original text.
 
-# Encrypt
-cipher_blocks = [aes_encrypt_block(msg_bytes[i:i+16], keys) for i in range(0, len(msg_bytes), 16)]
-ciphertext = b"".join(cipher_blocks)
+Learning Points:
+- Learn AES internal mechanics and round transformations.
+- Understand how block ciphers work and how data is securely transformed.
+- Educational version; for real applications, use libraries like PyCryptodome.
 
-# Decrypt
-plain_blocks = [aes_decrypt_block(ciphertext[i:i+16], keys) for i in range(0, len(ciphertext), 16)]
-plaintext = unpad(b"".join(plain_blocks))
-print(plaintext.decode())  # Output: HELLO WORLD
+AES GUI Application (Using Python Libraries):
+Overview:
+A user-friendly GUI for AES encryption and decryption supporting multiple modes (ECB, CBC, CFB, OFB).
 
-3️⃣ AES GUI (Tkinter + PyCryptodome)
-
-File: aes_gui.py
-
-Description:
-A GUI for AES encryption/decryption supporting multiple modes: ECB, CBC, CFB, OFB. Uses SHA-256 hashed password as key and PKCS7 padding.
+Features:
+- Input message and password.
+- Select encryption mode via buttons.
+- Display encrypted text (Hex) and decrypted text instantly.
 
 How it works:
-	1.	User enters a message and a password.
-	2.	Click on a mode button (e.g., ECB, CBC, CFB, OFB).
-	3.	GUI displays encrypted text in hex and decrypted text.
+- Passwords are hashed with SHA-256 to generate secure AES keys.
+- PKCS7 padding ensures proper block sizes.
+- AES encryption and decryption are handled using PyCryptodome library.
+- Tkinter provides the graphical interface for user interaction.
 
 Dependencies:
+- Python 3
+- Tkinter
+- PyCryptodome
 
-pip install pycryptodome
+How to use:
+1. Install the PyCryptodome library: pip install pycryptodome
+2. Run the GUI script.
+3. Enter your message and password.
+4. Click the desired AES mode button to encrypt or decrypt the text.
 
-Usage:
+Learning Points:
+- Learn to implement cryptography using existing Python libraries.
+- Understand AES modes of operation (ECB, CBC, CFB, OFB) in practice.
+- Combine GUI programming with secure encryption logic.
+- See how hashing and padding are applied in real-world encryption.
 
-python aes_gui.py
+Technologies Used:
+- Python 3
+- Tkinter
+- PyCryptodome
+- SHA-256 Hashing
 
-	•	Enter your message and password.
-	•	Select the encryption mode to get the encrypted and decrypted outputs.
-
-Notes
-	•	Caesar Cipher is for educational purposes; AES provides secure encryption.
-	•	The AES-from-scratch implementation is a learning tool; for production use, prefer PyCryptodome.
-
----
