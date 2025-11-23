@@ -1,83 +1,90 @@
 # AES_256_Encryption_Python
 📌 Encryption Project — Caesar Cipher + AES (GUI)
 
+## Description
+This project contains Python implementations of *Caesar Cipher* and *AES encryption, including a **GUI for AES encryption/decryption* with multiple modes (ECB, CBC, CFB, OFB). It's a learning project to demonstrate classic and modern encryption techniques.
 
+---
 
-🔐 1) Caesar Cipher Program
+## 1️⃣ Caesar Cipher
 
-✔ Description
+*File:* caesar_cipher.py
 
-A simple encryption program that uses the Caesar Cipher algorithm.
-The user enters a text and a shift value, and the program performs:
-	•	Encryption
-	•	Decryption
+*Description:*  
+A simple substitution cipher where each letter in the plaintext is shifted by a fixed number of positions.
 
-The algorithm works by shifting each letter by a specific number of positions.
+*Functions:*
+- caesar_encrypt(text, shift) – Encrypts text by shifting letters forward.  
+- caesar_decrypt(text, shift) – Decrypts text by shifting letters backward.  
 
-🧩 Features
-	•	Supports both uppercase and lowercase letters
-	•	Keeps numbers and symbols unchanged
-	•	User chooses encryption or decryption
-	•	Handles wrapping from Z → A
+*Usage Example:*
+```python
+# Encrypt
+encrypted_text = caesar_encrypt("HELLO", 3)
+print(encrypted_text)  # Output: KHOOR
 
-🧪 Example
+# Decrypt
+decrypted_text = caesar_decrypt(encrypted_text, 3)
+print(decrypted_text)  # Output: HELLO
 
-Shift = 3
-A → D
-B → E
+2️⃣ AES-128 Implementation (From Scratch)
 
-🔐 2) AES Encryption Program (GUI)
+File: aes_128.py
 
-✔ Description
+Description:
+A full AES-128 implementation from scratch, including:
+	•	Key Expansion
+	•	SubBytes & ShiftRows
+	•	MixColumns & AddRoundKey
+	•	PKCS7 Padding
 
-A Python GUI application built with Tkinter that performs:
-	•	AES Encryption
-	•	AES Decryption
+Functions:
+	•	aes_encrypt_block(block, keys) – Encrypts a 16-byte block.
+	•	aes_decrypt_block(block, keys) – Decrypts a 16-byte block.
+	•	pad(data) / unpad(data) – For block alignment.
+	•	key_expansion(key) – Expands a 16-byte key into 11 round keys.
 
-It supports multiple AES modes:
-	•	ECB
-	•	CBC
-	•	CFB
-	•	OFB
+Usage Example:
 
-Uses SHA-256 hashed password for key generation
-and displays both ciphertext (Hex) and decrypted text.
+msg = "HELLO WORLD"
+msg_bytes = pad(msg.encode())
+key = b"\x2b\x7e\x15\x16\x28\xae\xd2\xa6\xab\xf7\x15\x88\x09\xcf\x4f\x3c"
+keys = key_expansion(list(key))
 
-🧩 Features
-	•	Modern GUI design
-	•	Multiple AES encryption modes
-	•	Secure key generation using SHA-256
-	•	Automatic padding/unpadding
-	•	Easy input/output interface
+# Encrypt
+cipher_blocks = [aes_encrypt_block(msg_bytes[i:i+16], keys) for i in range(0, len(msg_bytes), 16)]
+ciphertext = b"".join(cipher_blocks)
 
-🚀 Technologies Used
-	•	Python
-	•	Tkinter GUI
-	•	PyCryptodome
-	•	Hashlib
-	•	ASCII operations
+# Decrypt
+plain_blocks = [aes_decrypt_block(ciphertext[i:i+16], keys) for i in range(0, len(ciphertext), 16)]
+plaintext = unpad(b"".join(plain_blocks))
+print(plaintext.decode())  # Output: HELLO WORLD
 
-📂 Files Included
-	•	caesar_cipher.py
-	•	aes_gui.py
-	•	README.md
+3️⃣ AES GUI (Tkinter + PyCryptodome)
 
-📌 How to Run
+File: aes_gui.py
 
-Caesar Cipher
+Description:
+A GUI for AES encryption/decryption supporting multiple modes: ECB, CBC, CFB, OFB. Uses SHA-256 hashed password as key and PKCS7 padding.
 
-python caesar_cipher.py
+How it works:
+	1.	User enters a message and a password.
+	2.	Click on a mode button (e.g., ECB, CBC, CFB, OFB).
+	3.	GUI displays encrypted text in hex and decrypted text.
 
-AES GUI
+Dependencies:
+
+pip install pycryptodome
+
+Usage:
 
 python aes_gui.py
 
-👩‍🏫 Project Goal
+	•	Enter your message and password.
+	•	Select the encryption mode to get the encrypted and decrypted outputs.
 
-This project demonstrates the difference between:
-	•	Simple encryption (Caesar Cipher)
-	•	Strong modern encryption (AES)
+Notes
+	•	Caesar Cipher is for educational purposes; AES provides secure encryption.
+	•	The AES-from-scratch implementation is a learning tool; for production use, prefer PyCryptodome.
 
-and shows how GUI can be used to make encryption easier for users.
-
-🎉 End of README.
+---
